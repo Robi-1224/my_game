@@ -31,7 +31,6 @@ class MyGameWorld extends World with HasGameReference<MyGame>{
 
     spawnTimer = TimerComponent(period: 2,repeat: true,onTick: spawnObstacle);
     add(spawnTimer);
-    print("start");
   }
 
   void Stop(){
