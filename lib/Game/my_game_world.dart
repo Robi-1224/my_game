@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/animation.dart';
 import 'package:my_game/Game/My_game.dart';
 import 'package:my_game/Game/scoreSystem.dart';
@@ -19,9 +18,8 @@ class MyGameWorld extends World with HasGameReference<MyGame>{
   Future<void> Start()async{
     removeAll(children.toList());
     if(!game.reset){
-     player =Player();
-     scoresystem = Scoresystem();
-     FlameAudio.loopLongAudio(MyGame.loopMusic);
+      player =Player();
+      scoresystem = Scoresystem();
     }
     await add(Background());
     await add(player);

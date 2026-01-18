@@ -16,6 +16,7 @@ import 'package:my_game/Game/resetButton.dart';
 class MyGame extends FlameGame<MyGameWorld>with KeyboardEvents,HasCollisionDetection{
   ResetButton? resetButton;
   bool reset = false;
+  bool musicStarted =false;
   static const jumpSfx ='jump.mp3';
   static const loopMusic ='background.mp3';
   static const hurtSfx ='hurt.mp3';
@@ -26,6 +27,7 @@ class MyGame extends FlameGame<MyGameWorld>with KeyboardEvents,HasCollisionDetec
 
   @override FutureOr<void> onLoad()async {
     await super.onLoad();
+    FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll([jumpSfx,loopMusic,hurtSfx]);
     camera.viewport =FixedResolutionViewport(resolution: Vector2(size.x,size.y)); 
     world.playerReady = (){
@@ -59,12 +61,16 @@ class MyGame extends FlameGame<MyGameWorld>with KeyboardEvents,HasCollisionDetec
   }
  @override KeyEventResult onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) { 
   if(event is KeyDownEvent){ 
+  if(!musicStarted){
+    FlameAudio.bgm.play(MyGame.loopMusic);
+    musicStarted = true;
+  }
   if(keysPressed.contains(LogicalKeyboardKey.space)&&world.player.isGrounded){ 
-    world.player.jumpPressed = true; 
-    return KeyEventResult.handled;
+      world.player.jumpPressed = true; 
+     return KeyEventResult.handled;
     } 
     } 
-    return KeyEventResult.ignored; 
+      return KeyEventResult.ignored; 
     } 
  }
   
